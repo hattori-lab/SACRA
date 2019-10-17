@@ -1,4 +1,5 @@
 # SACRA
+Split Amplified Chimeric Read Algorithm
 
 # Dependencies
 
