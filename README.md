@@ -13,17 +13,17 @@ samtools (Version: 1.4)
 http://www.htslib.org/
 
 # Workflow of SACRA
-SACRA operates in four phases: pairwise alignment, PARs detection, PC ratio calculation and split chimeras.
+SACRA operates in four phases: pairwise alignment, PARs detection, PC ratio calculation and split chimeras.  
 
-1. All vs all pairwise alignment of long-read by LAST aligner.
-First, SACRA performs all vs all alignment of input long-read multi-fasta. For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, CCs reads of PacBio, etc.). This process takes a time, so we recommend using multithreads.
+1. All vs all pairwise alignment of long-read by LAST aligner.  
+First, SACRA performs all vs all alignment of input long-read multi-fasta. For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, CCs reads of PacBio, etc.). This process takes a time, so we recommend using multithreads.  
 
-The options for using this process is below.
--a  Gap existence cost of LAST aligner. (default: 8)
--A  Insertion existence cost of LAST aligner. (default: 16)
--b  Gap extension cost of LAST aligner. (default: 12)
--B  Insertion extension cost of LAST aligner. (default: 5)
--P  Number of threads. (default: 50)
+The options for using this process is below.  
+-a  Gap existence cost of LAST aligner. (default: 8)  
+-A  Insertion existence cost of LAST aligner. (default: 16)  
+-b  Gap extension cost of LAST aligner. (default: 12)  
+-B  Insertion extension cost of LAST aligner. (default: 5)  
+-P  Number of threads. (default: 50)  
 
 2. Detecting the partial aligned reads (PARs) and obtaining the depth of PARs at the putative chimeric positions.
 Second, SACRA detects PARs and obtains the depth of PARs at putative chimeric positions.
