@@ -19,20 +19,20 @@ SACRA operates in four phases: pairwise alignment, PARs detection, PC ratio calc
 First, SACRA performs all vs all alignment of input long-read multi-fasta. For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, CCS reads of PacBio, etc.). This process takes a time, so we recommend using multithreads.  
 
 - The options for using this step is below.  
-- `-a` : Gap existence cost of LAST aligner (default: 8).  
-- `-A` : Insertion existence cost of LAST aligner (default: 16).  
-- `-b` : Gap extension cost of LAST aligner (default: 12).  
-- `-B` : Insertion extension cost of LAST aligner (default: 5).  
-- `-P` : Number of threads (default: 50).  
+    - `-a` : Gap existence cost of LAST aligner (default: 8).  
+    - `-A` : Insertion existence cost of LAST aligner (default: 16).  
+    - `-b` : Gap extension cost of LAST aligner (default: 12).  
+    - `-B` : Insertion extension cost of LAST aligner (default: 5).  
+    - `-P` : Number of threads (default: 50).  
 
 ## STEP 2. Detecting the partial aligned reads (PARs).
 Second, SACRA detects the partial aligned reads (PARs). and obtaining the depth of PARs at the putative chimeric positions.
 
 - The options for using this step is below.  
-- `XX` : Minimum alignment coverage length threshold (default: 100bp).  
-- `XX` : Minimum length of alignment start/end position from terminus of query or subject reads (default: 50bp). For obtaining the PARs, the alignment with start/end position within threshold from the query or subject read terminus are removed.  
-- `XX` : Mimimum depth of PARs (default: 5).  
-- `XX` : Alignment identity threshold (default: 75%).  
+    - `XX` : Minimum alignment coverage length threshold (default: 100bp).  
+    - `XX` : Minimum length of alignment start/end position from terminus of query or subject reads (default: 50bp). For obtaining the PARs, the alignment with start/end position within threshold from the query or subject read terminus are removed.  
+    - `XX` : Mimimum depth of PARs (default: 5).  
+    - `XX` : Alignment identity threshold (default: 75%).  
 
 ## STEP 3. Obtaining the PARs/CArs patio (PC ratio). at the putative chimeric positions.
 Third, SACRA calculates the depth of CARs and PC ratio at the putative chimeric positions at the putative chimeric positions obtained by STEP 2.  
