@@ -31,7 +31,7 @@ Second, SACRA detects the partial aligned reads (PARs) and obtaining the depth o
 The options for using this process is below.  
 `XX` : Minimum alignment coverage length threshold. (default: 100bp)  
 `XX` : Minimum length of alignment start/end position from terminus of query or subject reads. (default: 50bp)  
->For obtaining the PARs, the alignment with start/end position within threshold from the query or subject read terminus are removed.  
+- For obtaining the PARs, the alignment with start/end position within threshold from the query or subject read terminus are removed.  
 `XX` : Mimimum depth of PARs. (default: 5)  
 `XX` : Alignment identity threshold. (default: 75%)  
 
@@ -40,7 +40,7 @@ Third, SACRA calculates the depth of CARs and PC ratio at the putative chimeric 
 
 The options for using this process is below.  
 `XX` : Minimum length of alignment start/end position from putative chimeric position. (default: 50bp)  
->For obtaining the CARs, the alignments which have an alignment start and end position distant by threshold or more from the putative chimeric position are detected as CARs.  
+For obtaining the CARs, the alignments which have an alignment start and end position distant by threshold or more from the putative chimeric position are detected as CARs.  
 `XX` : Alignment identity threshold. (default: 75%)  
 
 ## STEP 4. Split the putative chimeric positions with PC ratio higher than threshold.
@@ -48,14 +48,14 @@ Finally, SACRA split the chimeras at the putative chimeric positions detected by
 
 The options for using this process is below.  
 `XX` : Minimum PC ratio (default: 10%)  
->SACRA detects the chimeric positions with PC ratio greater than threshold.  
+SACRA detects the chimeric positions with PC ratio greater than threshold.  
 `XX` : Mimimum depth of PARs + CARs. (default: 10)  
 `XX` : Sliding windows threshold. (default: 100bp)  
     For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs deoth in threshold windows.  
 
 # Output
 `pcratio`: The results of calculation of PARs, CARs and PC ratio. The out put file is composed by tab deliminated.  
->1. sequence id, 2. read length, 3. putative chimeric position, 4. depth of PARs, 5. depth of CARs, 6. PC ratio (%)  
+1. sequence id, 2. read length, 3. putative chimeric position, 4. depth of PARs, 5. depth of CARs, 6. PC ratio (%)  
 `non_chimera.fasta`: Non-chimeras sequences.  
 `split.fasta`: Split Split sequences.  
 `sacra.fasta`: Final sequences combining non-chimeras and split sequences.  
