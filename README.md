@@ -16,7 +16,7 @@ http://www.htslib.org/
 SACRA operates in four phases: pairwise alignment, PARs detection, PC ratio calculation and split chimeras.  
 
 ## STEP 1. All vs all pairwise alignment of long-read by LAST aligner.  
-First, SACRA performs all vs all alignment of input long-read multi-fasta. For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, CCS reads of PacBio, etc.). This process takes a time, so we recommend using multithreads.  
+First, SACRA performs all vs all alignment of input long-read multi-fasta. For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, CCS reads of PacBio, etc.). In the original paper, error-corrected long reads had relatively high accuracy with 96% on average. This process takes a time, so we recommend using multithreads.  
 
 - The options for using this step is below.  
     - `-a` : Gap existence cost of LAST aligner (default: 8).  
