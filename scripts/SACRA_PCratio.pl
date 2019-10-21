@@ -61,7 +61,7 @@ while(<FILE2>){
         $len = $array[12];
         for (my $i=1; $i<=$len; $i++){
             my $id = $seq."_".$i;
-            if(exists($hash_dep{$id})){         # candidate chimeric positionのhashのみ作成
+            if(exists($hash_dep{$id})){
                 $hash{$i} = 0;
             }
         }
