@@ -18,7 +18,7 @@ SACRA operates in four phases: pairwise alignment, PARs detection, PC ratio calc
 ## STEP 1. All vs all pairwise alignment of long-read by LAST aligner.  
 First, SACRA performs all vs all alignment of input long-read multi-fasta. For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, CCS reads of PacBio, etc.). This process takes a time, so we recommend using multithreads.  
 
-The options for using this process is below.  
+- The options for using this process is below.  
 `-a` : Gap existence cost of LAST aligner. (default: 8)  
 `-A` : Insertion existence cost of LAST aligner. (default: 16)  
 `-b` : Gap extension cost of LAST aligner. (default: 12)  
@@ -28,17 +28,17 @@ The options for using this process is below.
 ## STEP 2. Detecting the partial aligned reads (PARs).
 Second, SACRA detects the partial aligned reads (PARs) and obtaining the depth of PARs at the putative chimeric positions.
 
-The options for using this process is below.  
+- The options for using this process is below.  
 `XX` : Minimum alignment coverage length threshold. (default: 100bp)  
 `XX` : Minimum length of alignment start/end position from terminus of query or subject reads. (default: 50bp)  
-- For obtaining the PARs, the alignment with start/end position within threshold from the query or subject read terminus are removed.  
+For obtaining the PARs, the alignment with start/end position within threshold from the query or subject read terminus are removed.  
 `XX` : Mimimum depth of PARs. (default: 5)  
 `XX` : Alignment identity threshold. (default: 75%)  
 
 ## STEP 3. Obtaining the PARs/CArs patio (PC ratio) at the putative chimeric positions.
 Third, SACRA calculates the depth of CARs and PC ratio at the putative chimeric positions at the putative chimeric positions obtained by STEP 2.  
 
-The options for using this process is below.  
+- The options for using this process is below.  
 `XX` : Minimum length of alignment start/end position from putative chimeric position. (default: 50bp)  
 For obtaining the CARs, the alignments which have an alignment start and end position distant by threshold or more from the putative chimeric position are detected as CARs.  
 `XX` : Alignment identity threshold. (default: 75%)  
@@ -46,7 +46,7 @@ For obtaining the CARs, the alignments which have an alignment start and end pos
 ## STEP 4. Split the putative chimeric positions with PC ratio higher than threshold.
 Finally, SACRA split the chimeras at the putative chimeric positions detected by STEP3.
 
-The options for using this process is below.  
+- The options for using this process is below.  
 `XX` : Minimum PC ratio (default: 10%)  
 SACRA detects the chimeric positions with PC ratio greater than threshold.  
 `XX` : Mimimum depth of PARs + CARs. (default: 10)  
