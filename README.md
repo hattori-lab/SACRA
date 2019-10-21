@@ -41,7 +41,7 @@ Third, SACRA calculates the depth of CARs and PC ratio at the putative chimeric 
     - `XX` : Minimum length of alignment start/end position from putative chimeric position (default: 50bp). For obtaining the CARs, the alignments which have an alignment start and end position distant by this threshold or more from the putative chimeric position are detected as CARs.  
     - `XX` : Alignment identity threshold (default: 75%).  
 
-## STEP 4. Split the putative chimeric positions with PC ratio higher than threshold.
+## STEP 4. Split chimeras at the chimeric positions.
 Finally, SACRA split the chimeras at the putative chimeric positions detected by STEP 3.
 
 - The options for using this step is below.  
