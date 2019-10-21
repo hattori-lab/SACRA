@@ -27,8 +27,8 @@ if($h || $input eq ""){
 }
 
 my $seq = "first";
-my %hash_end;       # key: start/end position of PARs value: depth
-my $length;         # alignment length of query
+my %hash_end;       # key: start/end position of PARs, value: depth
+my $length;         # alignment length of query sequence
 my $end;            # alignment end position of PARs
 my $start;          # alignemnt start position of PARs
 
