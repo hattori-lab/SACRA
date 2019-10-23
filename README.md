@@ -50,7 +50,7 @@ Finally, SACRA split the chimeras at the putative chimeric positions detected by
     - `XX` : Sliding windows threshold (default: 100bp). For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs depth in this threshold windows.  
 
 # Output
-`pcratio`: The results of calculation of PARs, CARs and PC ratio. The out put is tab deliminated file containing six columns. 1. sequence id, 2. read length, 3. putative chimeric position, 4. depth of PARs, 5. depth of CARs, 6. PC ratio (%).  
+`pcratio`: The results of calculation of PARs, CARs and PC ratio. The output is tab deliminated file containing six columns. 1. sequence id, 2. read length, 3. putative chimeric position, 4. depth of PARs, 5. depth of CARs, 6. PC ratio (%).  
 `non_chimera.fasta`: Non-chimeras sequences.  
 `split.fasta`: Split sequences.  
 `sacra.fasta`: Final sequences combining non-chimeras and split sequences.  
