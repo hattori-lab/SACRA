@@ -21,7 +21,10 @@ echo -e "DONE\n"
 
 echo -e "STEP 3. Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
 perl SACRA_multi.pl $th $fasta.blasttab.depth
-for i in `ls  $fasta.blasttab.depth.split*`;do perl SACRA_PCratio.pl -i $fasta.blasttab -pa $i -ad 50 -id 75 > $i.pcratio & done
+for i in `ls  $fasta.blasttab.depth.split*`
+do
+    perl SACRA_PCratio.pl -i $fasta.blasttab -pa $i -ad 50 -id 75 > $i.pcratio & 
+done
 wait
 cat $fasta*.depth.split*.pcratio > $fasta.blasttab.depth.pcratio
 rm -rf $fasta*.depth.split*
