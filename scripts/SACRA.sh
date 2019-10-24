@@ -28,7 +28,7 @@ rm -rf $fasta*.depth.split*
 echo -e "DONE\n"
 
 echo -e "STEP 4. Split chimeras at the chimeric positions"
-perl SACRA_split.pl -i $fasta.blasttab.depth.pcratio -pc 15 -dp 10 -sl 100 > $fasta.blasttab.depth.pcratio.faidx
+perl SACRA_split.pl -i $fasta.blasttab.depth.pcratio -pc 10 -dp 10 -sl 100 > $fasta.blasttab.depth.pcratio.faidx
 perl SACRA_multi.pl $th $fasta.blasttab.depth.pcratio.faidx
 
 for i in `ls $fasta.blasttab.depth.pcratio.faidx.split*`
