@@ -1,66 +1,122 @@
 #!/bin/bash
-#Date: 2019/09/03
-#Developer: Yuya Kiguchi
+# Date: 2019/09/03
+# Developer: Yuya Kiguchi
 
-fasta=$1        # fasta file
-prefix=$2       # prefix
-th=50		    # No. of threads for LAST and multithreads
+function parse_yaml {
+  local prefix=$2
+  local s='[[:space:]]*' w='[a-zA-Z0–9_]*' fs=$(echo @|tr @ '\034')
+  sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+  -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+  awk -F$fs '{
+    indent = length($1)/2;
+    vname[indent] = $2;
+    for (i in vname) {if (i > indent) {delete vname[i]}}
+    if (length($3) > 0) {
+      vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+      printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+    }
+   }'
+}
+
+while getopts ":i:p:t:" o; do
+    case "${o}" in
+        i)
+            i=${OPTARG}
+            ;;
+        p)
+            p=${OPTARG}
+            ;;
+        t)
+            t=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+
+if [ -z "${i}" ] || [ -z "${p}" ] || [ -z "${t}" ]; then
+    echo "Usage: $0 [-i <input fasta file>] [-p <prefix>] [-t <max no. of cpu cores>]" 1>&2;
+    exit 1;
+fi
+
+eval $(parse_yaml config.yml)
 
 echo -e "***** [$0] start " `date +'%Y/%m/%d %H:%M:%S'` " *****\n"
 
 echo "STEP 1. All vs all pairwise alignment of long-read by LAST aligner"
-echo -e "lastdb -P $th -R01 -uNEAR $fasta $fasta"
-lastdb -P $th -R01 -uNEAR $fasta $fasta
-echo -e "lastal -a 8 -A 16 -b 12 -B 5 -S 1 -P $th -f BlastTab+ $fasta $fasta > $fasta.blasttab"
-lastal -a 8 -A 16 -b 12 -B 5 -S 1 -P $th -f BlastTab+ $fasta $fasta > $fasta.blasttab
+
+makedb_cmd="lastdb -P $t -R $alignment_R -u $alignment_u  $i $i"
+
+echo $makedb_cmd
+$makedb_cmd
+
+alignment_cmd="lastal -a $alignment_a -A $alignment_A -b $alignment_b -B $alignment_B -S $alignment_S -P $t -f $alignment_f $i $i > $i.blasttab"
+echo $alignment_cmd
+$alignment_cmd
 echo -e "DONE\n"
 
 echo -e "STEP 2. Detecting the partial aligned reads (PARs)"
-perl SACRA_PARs_depth.pl -i $fasta.blasttab -al 100 -tl 50 -pd 5 -id 75 > $fasta.blasttab.depth
+parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
+echo $parsdepth_cmd
+$parsdepth_cmd 
 echo -e "DONE\n"
 
+exit;
+
 echo -e "STEP 3. Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
-perl SACRA_multi.pl $th $fasta.blasttab.depth
-for i in `ls  $fasta.blasttab.depth.split*`
+pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
+echo $pcratio_cmd
+$pcratio_cmd
+for k in `ls  $i.blasttab.depth.split*`
 do
-    perl SACRA_PCratio.pl -i $fasta.blasttab -pa $i -ad 50 -id 75 > $i.pcratio & 
+    perl SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio & 
 done
+
+# wait for all backgroud jobs to finish
 wait
-cat $fasta*.depth.split*.pcratio > $fasta.blasttab.depth.pcratio
-rm -rf $fasta*.depth.split*
+
+cat $i*.depth.split*.pcratio > $i.blasttab.depth.pcratio
+rm -rf $i*.depth.split*
 echo -e "DONE\n"
 
 echo -e "STEP 4. Split chimeras at the chimeric positions"
-perl SACRA_split.pl -i $fasta.blasttab.depth.pcratio -pc 10 -dp 10 -sl 100 > $fasta.blasttab.depth.pcratio.faidx
-perl SACRA_multi.pl $th $fasta.blasttab.depth.pcratio.faidx
+split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
+echo $split_cmd
+$split_cmd
+perl SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
 
-for i in `ls $fasta.blasttab.depth.pcratio.faidx.split*`
+for n in `ls $i.blasttab.depth.pcratio.faidx.split*`
 do
-    for j in `less $i`
+    for j in `less $n`
     do
-        echo "samtools faidx $fasta $j >> $i.fasta" >> $i.sh
+        echo "samtools faidx $i $j >> $n.fasta" >> $n.sh
     done
 done
 
-samtools faidx $fasta
-chmod +x $fasta.blasttab.depth.pcratio.faidx.split*sh
-for i in `ls $fasta.blasttab.depth.pcratio.faidx.split*sh`
+samtools faidx $i
+chmod +x $i.blasttab.depth.pcratio.faidx.split*sh
+for m in `ls $i.blasttab.depth.pcratio.faidx.split*sh`
 do
-    bash $i &
+    bash $m &
 done
+# wait for all backgroud jobs to finish
 wait
-cat $fasta.blasttab.depth.pcratio.faidx.split*fasta > $fasta.split.fasta
-rm -rf $fasta.blasttab.depth.pcratio.faidx.split*
+
+cat $i.blasttab.depth.pcratio.faidx.split*fasta > $i.split.fasta
+rm -rf $i.blasttab.depth.pcratio.faidx.split*
 echo -e "DONE\n"
 
 # Output reads
 echo -e "Output final reads"
-awk -F ":" '{print $1}' $fasta.blasttab.depth.pcratio.faidx | uniq > $fasta.blasttab.depth.pcratio.faidx.id
-seqkit grep -v -f $fasta.blasttab.depth.pcratio.faidx.id $fasta > $fasta.non_chimera.fasta
-cat $fasta.non_chimera.fasta $fasta.split.fasta > $prefix
+awk -F ":" '{print $1}' $i.blasttab.depth.pcratio.faidx | uniq > $i.blasttab.depth.pcratio.faidx.id
+seqkit grep -v -f $i.blasttab.depth.pcratio.faidx.id $i > $i.non_chimera.fasta
+cat $i.non_chimera.fasta $i.split.fasta > $p
 
-echo "Split reads: $fasta.split.fasta"
-echo "Non-chimeras: $fasta.non_chimera.fasta"
-echo -e "Combined reads: $prefix\n"
+echo "Split reads: $i.split.fasta"
+echo "Non-chimeras: $i.non_chimera.fasta"
+echo -e "Combined reads: $p\n"
 
 echo "***** [$0] end " `date +'%Y/%m/%d %H:%M:%S'` " *****"
