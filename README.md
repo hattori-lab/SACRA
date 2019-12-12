@@ -15,6 +15,7 @@ http://www.htslib.org/
 
 # Workflow of SACRA
 SACRA operates in four phases: 1. alignment, 2. parsdepth, 3. pcratio and 4. split.  
+https://user-images.githubusercontent.com/38690620/70684422-7985f000-1ce9-11ea-82d5-79addb16c248.png
 
 ## STEP 1. alignment
 SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
@@ -90,10 +91,10 @@ split:
 
 
 # Output
-`pcratio`: The results of calculation of PARs, CARs and PC ratio. The output is tab deliminated file containing six columns. 1. sequence id, 2. read length, 3. candidate chimeric position, 4. depth of PARs, 5. depth of CARs, 6. PC ratio (%).
-`non_chimera.fasta`: Non-chimeras sequences.
-`split.fasta`: Split sequences.
-`output.fasta`: Final sequences combining non-chimeras and split sequences.
+`pcratio`: The results of calculation of PARs, CARs and PC ratio. The output is tab deliminated file containing six columns. 1. sequence id, 2. read length, 3. candidate chimeric position, 4. depth of PARs, 5. depth of CARs, 6. PC ratio (%).  
+`non_chimera.fasta`: Non-chimeras sequences.  
+`split.fasta`: Split sequences.  
+`output.fasta`: Final sequences combining non-chimeras and split sequences.  
 
 # Citation
 XXXXXXXXXXXXXXXXX  
