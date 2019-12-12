@@ -42,6 +42,7 @@ Calculates the depth of continuously aligned reads (CARs) and the PARs/CARs rati
 - The options for using this step is below. You can change these options in the config.yml.
     - `ad` : Minimum length of alignment start/end position from candidate chimeric position (default: 50bp). For obtaining the CARs, the alignments which have an alignment start and end position distant by this threshold or more from the candidate chimeric position are detected as CARs.  
     - `id` : Alignment identity threshold of CARs (default: 75%).  
+      
     ![PARs_CARs](https://user-images.githubusercontent.com/38690620/70687355-4005b280-1cf2-11ea-8625-984e775294c5.png)
 
 ## STEP 4. split
