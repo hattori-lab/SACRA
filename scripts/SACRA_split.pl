@@ -1,6 +1,8 @@
 #!/usr/bin/perl
-#Developer: Yuya Kiguchi
-#Description: SACRAで検出されたchimeric candidate positionでsplitしたリード情報をfaidx形式で出力
+
+#################################
+# Copyright (c) 2019 Yuya Kiguchi
+#################################
 
 use Getopt::Long;
 use strict;
@@ -57,7 +59,7 @@ while(<FILE>){
         }
         else{
             if($array[3] + $array[4] >= $depth && $array[5] >= $pc_thresh){
-                if($first_pos + $search_length < $array[2]){        # 最後のPARsが100bp以上離れている場合
+                if($first_pos + $search_length < $array[2]){
                     for my $keys (reverse sort {$a <=> $b} keys %hash){
                         if($first_base == 1){
                             my $pos = $hash{$keys} - 1;
@@ -76,7 +78,7 @@ while(<FILE>){
                         last;
                     }
                 }
-                else{                                               # 最後のPARsが100bp以内の場合
+                else{
                     $hash{$array[3]} = $array[2];
                     for my $keys (reverse sort {$a <=> $b} keys %hash){
                         if($first_base == 1){
@@ -93,10 +95,10 @@ while(<FILE>){
                     }
                 }
             }
-            else{                                                   # 最後のPARsが閾値を満たさない場合
+            else{
                 for my $keys (reverse sort {$a <=> $b} keys %hash){
                     if($first_base == 1){
-                        my $pos = $hash{$keys} - 1;                 # chimeric postionの１つ前まで出力
+                        my $pos = $hash{$keys} - 1;
                         print "$seq:1-$pos\n";
                         print "$seq:$hash{$keys}-$len\n";
                     }
@@ -142,10 +144,10 @@ while(<FILE>){
         $hash{$array[3]} = $array[2];
     }
     elsif($seq eq $array[0]){
-        if($first_pos + $search_length < $array[2]){    # 新たに検出されたchimera position
-            for my $keys (reverse sort {$a <=> $b} keys %hash){ # 最大のPARsを出力
+        if($first_pos + $search_length < $array[2]){ 
+            for my $keys (reverse sort {$a <=> $b} keys %hash){
                 if($first_base == 1){
-                    my $pos = $hash{$keys} - 1;         # chimeric postionの１つ前まで出力
+                    my $pos = $hash{$keys} - 1;
                     print "$seq:1-$pos\n";
                     $first_base = 0;
                 }

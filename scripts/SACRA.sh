@@ -1,6 +1,8 @@
 #!/bin/bash
-# Date: 2019/12/12
-# Developer: Yuya Kiguchi
+
+#################################
+# Copyright (c) 2019 Yuya Kiguchi
+#################################
 
 function parse_yaml {
   local prefix=$2

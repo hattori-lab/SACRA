@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+#################################
+# Copyright (c) 2019 Yuya Kiguchi
+#################################
+
 use strict;
 use POSIX;
 

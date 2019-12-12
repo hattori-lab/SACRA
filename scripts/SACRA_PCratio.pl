@@ -1,6 +1,8 @@
 #!usr/bin/perl
-#Developer: Yuya Kiguchi
-#Description: calculate PC ratio
+
+#################################
+# Copyright (c) 2019 Yuya Kiguchi
+#################################
 
 use Getopt::Long;
 use strict;
