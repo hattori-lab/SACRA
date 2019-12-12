@@ -1,5 +1,5 @@
 # SACRA
-Split Amplified Chimeric Read Algorithm
+Split Amplified Chimeric Read Algorithm  
 SACRA splits the chimeric reads to the non-chimeric reads in PacBio long reads of MDA-treated virome sample.
 
 # Dependencies
