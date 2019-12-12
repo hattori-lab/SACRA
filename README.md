@@ -28,7 +28,7 @@ For obtaining better performance of SACRA, input long-read needs to be highly ac
     - `B` : Insertion extension cost of LAST aligner (default: 5).  
 
 ## STEP 2. parsdepth
-Detects the partially aligned reads (PARs) and candidate chimeric positions from the alignment result of STEP 1, and obtains the depth of PARs at that positions.
+Detect the partially aligned reads (PARs) and candidate chimeric positions from the alignment result of STEP 1, and obtain the depth of PARs at that positions.
 
 - The options for using this step is below. You can change these options in the config.yml.
     - `al` : Minimum alignment length (default: 100bp).  
@@ -37,10 +37,10 @@ Detects the partially aligned reads (PARs) and candidate chimeric positions from
     - `id` : Alignment identity threshold of PARs (default: 75%).  
 
 ## STEP 3. pcratio
-Calculates the depth of continuously aligned reads (CARs) and the PARs/CARs ratio (PC ratio) at the candidate chimeric positions.
+Calculate the depth of continuously aligned reads (CARs) and the PARs/CARs ratio (PC ratio) at the candidate chimeric positions.
 
 - The options for using this step is below. You can change these options in the config.yml.
-    - `ad` : Minimum length of alignment start/end position from candidate chimeric position (default: 50bp). For obtaining the CARs, the alignments which have an alignment start and end position distant by this threshold or more from the candidate chimeric position are detected as CARs.  
+    - `ad` : Minimum length of alignment start/end position from candidate chimeric position (default: 50bp). CARs are detected if it have the alignment with start and end position distant by this threshold or more from the candidate chimeric position.  
     - `id` : Alignment identity threshold of CARs (default: 75%).  
       
     ![PARs_CARs](https://github.com/hattori-lab/SACRA/blob/development/documentation/images/PARs_CARs.png)
@@ -52,7 +52,6 @@ Split the chimeric read at the chimeric positions detected by STEP 3.
     - `pc` : Minimum PC ratio (default: 10%). SACRA detects the chimeric positions with PC ratio greater than this threshold.  
     - `dp` : Mimimum depth of PARs + CARs (default: 10).  
     - `sl` : Sliding windows threshold (default: 100bp). For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs depth in this threshold windows.  
-
 
 # Installation
 
