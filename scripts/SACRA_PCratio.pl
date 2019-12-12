@@ -17,7 +17,7 @@ my $identity_th = 75;
 
 GetOptions('help' => \$h, 'pa=s' => \$par, 'i=s' => \$blasttab, 'ad=i' => \$across_length, 'id=i' => \$identity_th);
 if($h || $par eq "" || $blasttab eq ""){
-    print "Script to calculate depth of PARs
+    print "Error SACRA_PCratio.pl: Unable to read the output file of SACRA_multi.pl or alignment step.
 # Arguments :
 -i  : input blasttab file
 -pa : input depth of PARs
@@ -27,7 +27,7 @@ if($h || $par eq "" || $blasttab eq ""){
 }
 
 # Input depth of PARs
-open (FILE, $par) or die;
+open (FILE, $par) or die("Error SACRA_PCratio.pl: Unable to read the output file of SACRA_multi.pl at pcratio step.\n");
 my %hash_dep;
 while(<FILE>){
     chomp;
@@ -42,7 +42,7 @@ my $start;          # alignemnt start position of CARs
 my $end;            # alignment end position of CARs
 my %hash;           # keys: position, value: depth of CRAs
 
-open (FILE2, $blasttab) or die;
+open (FILE2, $blasttab) or die("Error SACRA_PCratio.pl: Unable to read the output file of alignment step.\n");
 while(<FILE2>){
     chomp;
     my @array = split(/\t/, $_);

@@ -10,7 +10,7 @@ use POSIX;
 my $no_files = $ARGV[0];
 my $file = $ARGV[1];
 
-open (FILE, $file) || die;
+open (FILE, $file) || die("Error SACRA_multi.pl: Unable to read the output file of pardepth step.\n");
 my @buffers = <FILE>; 
 my $lines = @buffers;
 my $split_file = $lines/$no_files;
@@ -20,7 +20,7 @@ my $seq;
 my @push;
 my $count = 0;
 my $split = 1;
-open (FILE, $file) || die;
+open (FILE, $file) || die("Error SACRA_multi.pl: Unable to read the output file of pardepth step.\n");
 while(<FILE>){
     chomp;
     my @array = split(/\t/, $_);

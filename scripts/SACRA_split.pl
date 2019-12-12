@@ -17,12 +17,12 @@ my $search_length = 100;
 
 GetOptions('help' => \$h, 'i=s' => \$input, 'pc=i' => \$pc_thresh, 'dp=i' => \$depth, 'sl=i' => \$search_length);
 if($h || $input eq ""){
-    print "Script to calculate depth of PARs
+    print "Error SACRA_split.pl: Unable to read the output file of pcratio.
 # Arguments :
 -i  : input PC ratio file
 -pc : Minimum PC ratio for detecting chimeric position (default: 15)
 -dp : Minimum total depth of PARs and CARs (default: 10)
--sl : Sequence length of searching for detecting most probable chimeric position (default: 100)\n";
+-sl : Sliding windows threshold for detecting most probable chimeric position (default: 100)\n";
     die "\n";
 }
 
@@ -32,7 +32,7 @@ my $first_base;
 my $first_pos;
 my $chi_pos;
 my %hash;
-open (FILE, $input) or die;
+open (FILE, $input) or die("Error SACRA_split.pl: Unable to read the output file of pcratio.\n");
 while(<FILE>){
     chomp;
     my @array = split(/\t/, $_);

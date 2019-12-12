@@ -18,7 +18,7 @@ my $identity_th = 75;
 
 GetOptions('help' => \$h, 'i=s' => \$input, 'al=i' => \$align_length, 'tl=i' => \$terminal_length, 'pd=i' => \$par_th, 'id=i' => \$identity_th);
 if($h || $input eq ""){
-    print "Script to calculate depth of PARs
+    print "Error SACRA_PARs_depth.pl: Unable to read the output file of alignment step.
 # Arguments :
 -i  : input blasttab file
 -al : Minimum alignment length of query sequence (default: 100)
@@ -34,7 +34,7 @@ my $length;         # alignment length of query sequence
 my $end;            # alignment end position of PARs
 my $start;          # alignemnt start position of PARs
 
-open (FILE, $input) or die;
+open (FILE, $input) or die("Error SACRA_PARs_depth.pl: Unable to read the output file of alignment step.\n");
 while(<FILE>){
     chomp;
     my @array = split(/\t/, $_);
