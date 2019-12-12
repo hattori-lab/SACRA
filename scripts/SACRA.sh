@@ -1,5 +1,5 @@
 #!/bin/bash
-# Date: 2019/09/03
+# Date: 2019/12/12
 # Developer: Yuya Kiguchi
 
 function parse_yaml {
@@ -48,29 +48,27 @@ echo -e "***** [$0] start " `date +'%Y/%m/%d %H:%M:%S'` " *****\n"
 
 echo "STEP 1. All vs all pairwise alignment of long-read by LAST aligner"
 
-makedb_cmd="lastdb -P $t -R $alignment_R -u $alignment_u  $i $i"
+makedb_cmd="lastdb -P $t -R $alignment_R -u $alignment_u $i $i"
 
 echo $makedb_cmd
-$makedb_cmd
+eval $makedb_cmd
 
 alignment_cmd="lastal -a $alignment_a -A $alignment_A -b $alignment_b -B $alignment_B -S $alignment_S -P $t -f $alignment_f $i $i > $i.blasttab"
 echo $alignment_cmd
-$alignment_cmd
+eval $alignment_cmd
 echo -e "DONE\n"
 
-echo -e "STEP 2. Detecting the partial aligned reads (PARs)"
+echo -e "STEP 2. Detecting the partiallly aligned reads (PARs)"
 parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
 echo $parsdepth_cmd
-$parsdepth_cmd 
+eval $parsdepth_cmd 
 echo -e "DONE\n"
-
-exit;
 
 echo -e "STEP 3. Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
 pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
 echo $pcratio_cmd
-$pcratio_cmd
-for k in `ls  $i.blasttab.depth.split*`
+eval $pcratio_cmd
+for k in `ls $i.blasttab.depth.split*`
 do
     perl SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio & 
 done
@@ -85,7 +83,7 @@ echo -e "DONE\n"
 echo -e "STEP 4. Split chimeras at the chimeric positions"
 split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
 echo $split_cmd
-$split_cmd
+eval $split_cmd
 perl SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
 
 for n in `ls $i.blasttab.depth.pcratio.faidx.split*`
