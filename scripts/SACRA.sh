@@ -48,7 +48,7 @@ eval $(parse_yaml config.yml)
 
 echo -e "***** [$0] start " `date +'%Y/%m/%d %H:%M:%S'` " *****\n"
 
-echo "STEP 1. All vs all pairwise alignment of long-read by LAST aligner"
+echo "STEP 1. alignment: All vs all pairwise alignment of long-read by LAST aligner"
 
 makedb_cmd="lastdb -P $t -R $alignment_R -u $alignment_u $i $i"
 
@@ -60,13 +60,13 @@ echo $alignment_cmd
 eval $alignment_cmd
 echo -e "DONE\n"
 
-echo -e "STEP 2. Detecting the partiallly aligned reads (PARs)"
+echo -e "STEP 2. parsdepth: Detecting the partially aligned reads (PARs)"
 parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
 echo $parsdepth_cmd
 eval $parsdepth_cmd 
 echo -e "DONE\n"
 
-echo -e "STEP 3. Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
+echo -e "STEP 3. pcratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
 pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
 echo $pcratio_cmd
 eval $pcratio_cmd
@@ -82,7 +82,7 @@ cat $i*.depth.split*.pcratio > $i.blasttab.depth.pcratio
 rm -rf $i*.depth.split*
 echo -e "DONE\n"
 
-echo -e "STEP 4. Split chimeras at the chimeric positions"
+echo -e "STEP 4. split: Split chimeras at the chimeric positions"
 split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
 echo $split_cmd
 eval $split_cmd
