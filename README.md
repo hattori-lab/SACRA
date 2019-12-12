@@ -88,7 +88,7 @@ pcratio:
 
 split:
   pc: 10          : Minimum PC ratio
-  dp: 10          : imimum depth of PARs + CARs
+  dp: 10          : Mimimum depth of PARs + CARs
   sl: 100         : Sliding windows threshold
 ```
 
