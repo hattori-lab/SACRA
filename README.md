@@ -15,7 +15,6 @@ http://www.htslib.org/
 
 # Workflow of SACRA
 SACRA operates in four phases: 1. alignment, 2. parsdepth, 3. pcratio and 4. split.  
-<!-- ![ARCs](https://user-images.githubusercontent.com/38690620/70684422-7985f000-1ce9-11ea-82d5-79addb16c248.png) -->
 
 ## STEP 1. alignment
 SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
@@ -68,29 +67,29 @@ All parameters of four steps are able to change by editting the config.yml.
 ---
 
 alignment:
-  R: "01"
-  u: "NEAR"
-  a: 8 
-  A: 16 
-  b: 12 
-  B: 5 
-  S: 1  
-  f: "BlastTab+"
+  R: "01"         : Specify lowercase-marking of lastdb.  
+  u: "NEAR"       : Specify a seeding scheme of lastdb.  
+  a: 8            : Gap existence cost
+  A: 16           : Insertion existence cost
+  b: 12           : Gap extension cost
+  B: 5            : Insertion extension cost
+  S: 1            : Specify how to use the substitution score matrix for reverse strands
+  f: "BlastTab+"  : Output format of LAST. SACRA accepts only BlastTab+ format.
 
 parsdepth:
-  al: 100 
-  tl: 50 
-  pd: 5 
-  id: 75
+  al: 100         : Minimum alignment length
+  tl: 50          : Minimum terminal length of unaligned region of PARs
+  pd: 5           : Mimimum depth of PARs
+  id: 75          : Alignment identity threshold of PARs
 
 pcratio:
-  ad: 50 
-  id: 75
+  ad: 50          : Minimum length of alignment start/end position from candidate chimeric position
+  id: 75          : Alignment identity threshold of CARs
 
 split:
-  pc: 10 
-  dp: 10 
-  sl: 100
+  pc: 10          : Minimum PC ratio
+  dp: 10          : imimum depth of PARs + CARs
+  sl: 100         : Sliding windows threshold
 ```
 
 
