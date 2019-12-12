@@ -1,5 +1,6 @@
 # SACRA
 Split Amplified Chimeric Read Algorithm
+SACRA splits the chimeric reads to the non-chimeric reads in PacBio long reads of MDA-treated virome sample.
 
 # Dependencies
 
@@ -17,7 +18,7 @@ SACRA operates in four phases: 1. alignment, 2. parsdepth, 3. pcratio and 4. spl
 
 ## STEP 1. alignment
 SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
-For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, HiFi reads of PacBio, etc.). In the original paper, error-corrected long reads had relatively high accuracy with 96% on average. This process takes a time, so we recommend using multithreads.
+For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, HiFi reads of PacBio, etc.). In the original paper, error-corrected long reads had relatively high accuracy with 97% on average. This process takes a time, so we recommend using multithreads.
 
 - The options for using this step is below. You can change these options in config.yml.
     - `a` : Gap existence cost of LAST aligner (default: 8).
@@ -58,6 +59,35 @@ Split the chimeric read at the chimeric positions detected by STEP 3.
 ```
 
 # Config file
+```
+---
+
+alignment:
+  R: "01"
+  u: "NEAR"
+  a: 8 
+  A: 16 
+  b: 12 
+  B: 5 
+  S: 1  
+  f: "BlastTab+"
+
+parsdepth:
+  al: 100 
+  tl: 50 
+  pd: 5 
+  id: 75
+
+pcratio:
+  ad: 50 
+  id: 75
+
+split:
+  pc: 10 
+  dp: 10 
+  sl: 100
+```
+
 
 # Output
 `pcratio`: The results of calculation of PARs, CARs and PC ratio. The output is tab deliminated file containing six columns. 1. sequence id, 2. read length, 3. putative chimeric position, 4. depth of PARs, 5. depth of CARs, 6. PC ratio (%).  
