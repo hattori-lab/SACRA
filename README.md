@@ -63,6 +63,7 @@ Run the below command in the directory containing the config.yml.
 ```
 
 # Config file
+All parameters of four steps are able to change by editting the config.yml.
 ```
 ---
 
