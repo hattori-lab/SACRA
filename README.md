@@ -13,19 +13,44 @@ samtools (Version: 1.4).
 http://www.htslib.org/
 
 # Workflow of SACRA
-SACRA operates in four phases: pairwise alignment, PARs detection, PC ratio calculation and split chimeras.  
+SACRA operates in four phases: 1. alignment, 2. parsdepth, 3. pcratio and 4. split.  
 
 ## STEP 1. alignment
-SACRA performs all vs all pairwise alignment of input long-read by LAST aligner. For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, HiFi reads of PacBio, etc.). In the original paper, error-corrected long reads had relatively high accuracy with 96% on average. This process takes a time, so we recommend using multithreads.  
+SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
+For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, HiFi reads of PacBio, etc.). In the original paper, error-corrected long reads had relatively high accuracy with 96% on average. This process takes a time, so we recommend using multithreads.
+
+- The options for using this step is below. You can change these options in config.yml.
+    - `a` : Gap existence cost of LAST aligner (default: 8).
+    - `A` : Insertion existence cost of LAST aligner (default: 16).
+    - `b` : Gap extension cost of LAST aligner (default: 12).
+    - `B` : Insertion extension cost of LAST aligner (default: 5).  
 
 ## STEP 2. parsdepth
 Detects the partially aligned reads (PARs) and putative chimeric positions from the alignment result of STEP 1, and obtains the depth of PARs at that positions.
 
+    - The options for using this step is below. You can change these options in config.yml.
+    - `al` : Minimum alignment coverage length threshold (default: 100bp).  
+    - `tl` : Minimum terminal length of unaligned region of PARs (default: 50bp). For obtaining the PARs, the alignment with start/end position within this threshold from the query or subject read terminus are removed.  
+    - `pd` : Mimimum depth of PARs (default: 5).  
+    - `id` : Alignment identity threshold (default: 75%).  
+
 ## STEP 3. pcratio
 Calculates the depth of continuously aligned reads (CARs) and the PARs/CARs ratio (PC ratio) at the candidate chimeric positions.
 
+    - The options for using this step is below. You can change these options in config.yml.
+    - `ad` : Minimum length of alignment start/end position from putative chimeric position (default: 50bp). For obtaining the CARs, the alignments which have an alignment start and end position distant by this threshold or more from the putative chimeric position are detected as CARs.  
+    - `id` : Alignment identity threshold (default: 75%).  
+
 ## STEP 4. split
-Split the chimeras at the putative chimeric positions detected by STEP 3.
+Split the chimeric read at the chimeric positions detected by STEP 3.
+
+    - The options for using this step is below. You can change these options in config.yml.
+    - `10` : Minimum PC ratio (default: 10%). SACRA detects the chimeric positions with PC ratio greater than this threshold.  
+    - `10` : Mimimum depth of PARs + CARs (default: 10).  
+    - `100` : Sliding windows threshold (default: 100bp). For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs depth in this threshold windows.
+
+# Installation
+
 
 # Usage
 ```
