@@ -15,7 +15,7 @@ http://www.htslib.org/
 
 # Workflow of SACRA
 SACRA operates in four phases: 1. alignment, 2. parsdepth, 3. pcratio and 4. split.  
-![ARCs](https://user-images.githubusercontent.com/38690620/70684422-7985f000-1ce9-11ea-82d5-79addb16c248.png)
+<!-- ![ARCs](https://user-images.githubusercontent.com/38690620/70684422-7985f000-1ce9-11ea-82d5-79addb16c248.png) -->
 
 ## STEP 1. alignment
 SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
@@ -47,9 +47,9 @@ Calculates the depth of continuously aligned reads (CARs) and the PARs/CARs rati
 Split the chimeric read at the chimeric positions detected by STEP 3.
 
 - The options for using this step is below. You can change these options in config.yml.
-    - `10` : Minimum PC ratio (default: 10%). SACRA detects the chimeric positions with PC ratio greater than this threshold.  
-    - `10` : Mimimum depth of PARs + CARs (default: 10).  
-    - `100` : Sliding windows threshold (default: 100bp). For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs depth in this threshold windows.
+    - `pc` : Minimum PC ratio (default: 10%). SACRA detects the chimeric positions with PC ratio greater than this threshold.  
+    - `dp` : Mimimum depth of PARs + CARs (default: 10).  
+    - `sl` : Sliding windows threshold (default: 100bp). For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs depth in this threshold windows.
 
 # Installation
 
