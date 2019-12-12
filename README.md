@@ -15,7 +15,7 @@ http://www.htslib.org/
 
 # Workflow of SACRA
 SACRA operates in four phases: 1. alignment, 2. parsdepth, 3. pcratio and 4. split.  
-https://user-images.githubusercontent.com/38690620/70684422-7985f000-1ce9-11ea-82d5-79addb16c248.png
+![ARCs](https://user-images.githubusercontent.com/38690620/70684422-7985f000-1ce9-11ea-82d5-79addb16c248.png)
 
 ## STEP 1. alignment
 SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
