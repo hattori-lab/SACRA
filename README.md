@@ -53,12 +53,15 @@ Split the chimeric read at the chimeric positions detected by STEP 3.
     - `sl` : Sliding windows threshold (default: 100bp). For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs depth in this threshold windows.  
 
 # Installation
-
+```
+git clone https://github.com/hattori-lab/SACRA.git
+export PATH=$PATH:/path_on_your_system/SACRA/scripts/
+```
 
 # Usage
 Run the below command in the directory containing the config.yml.  
 ```
-./SACRA.sh [-i <input fasta file>] [-p <prefix>] [-t <max no. of cpu cores>]
+SACRA.sh [-i <input fasta file>] [-p <prefix>] [-t <max no. of cpu cores>]
 ```
 
 # Config file
@@ -67,29 +70,29 @@ All parameters of four steps are able to change by editting the config.yml.
 ---
 
 alignment:
-  R: "01"         : Specify lowercase-marking of lastdb.  
-  u: "NEAR"       : Specify a seeding scheme of lastdb.  
-  a: 8            : Gap existence cost
-  A: 16           : Insertion existence cost
-  b: 12           : Gap extension cost
-  B: 5            : Insertion extension cost
-  S: 1            : Specify how to use the substitution score matrix for reverse strands
+  R: "01"         : Specify lowercase-marking of lastdb.
+  u: "NEAR"       : Specify a seeding scheme of lastdb.
+  a: 8            : Gap existence cost.
+  A: 16           : Insertion existence cost.
+  b: 12           : Gap extension cost.
+  B: 5            : Insertion extension cost.
+  S: 1            : Specify how to use the substitution score matrix for reverse strands.
   f: "BlastTab+"  : Output format of LAST. SACRA accepts only BlastTab+ format.
 
 parsdepth:
-  al: 100         : Minimum alignment length
-  tl: 50          : Minimum terminal length of unaligned region of PARs
-  pd: 5           : Mimimum depth of PARs
-  id: 75          : Alignment identity threshold of PARs
+  al: 100         : Minimum alignment length.
+  tl: 50          : Minimum terminal length of unaligned region of PARs.
+  pd: 5           : Mimimum depth of PARs.
+  id: 75          : Alignment identity threshold of PARs.
 
 pcratio:
-  ad: 50          : Minimum length of alignment start/end position from candidate chimeric position
-  id: 75          : Alignment identity threshold of CARs
+  ad: 50          : Minimum length of alignment start/end position from candidate chimeric position.
+  id: 75          : Alignment identity threshold of CARs.
 
 split:
-  pc: 10          : Minimum PC ratio
-  dp: 10          : Mimimum depth of PARs + CARs
-  sl: 100         : Sliding windows threshold
+  pc: 10          : Minimum PC ratio.
+  dp: 10          : Mimimum depth of PARs + CARs.
+  sl: 100         : Sliding windows threshold.
 ```
 
 
