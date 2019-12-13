@@ -1,4 +1,4 @@
-#!usr/bin/perl
+#!/usr/bin/perl
 
 #################################
 # Copyright (c) 2019 Yuya Kiguchi
