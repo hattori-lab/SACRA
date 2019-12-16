@@ -58,7 +58,6 @@ eval $makedb_cmd
 alignment_cmd="lastal -a $alignment_a -A $alignment_A -b $alignment_b -B $alignment_B -S $alignment_S -P $t -f $alignment_f $i $i > $i.blasttab"
 echo $alignment_cmd
 eval $alignment_cmd
-echo "Average read-vs-read identity (%): "
 id=`grep -v "#" $i.blasttab  | shuf -n 1000 | awk '{m+=$3} END{print m/NR}'`
 echo "Average read-vs-read identity (%): $id"
 echo -e "DONE\n"
