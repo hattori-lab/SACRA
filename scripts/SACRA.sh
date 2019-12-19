@@ -50,12 +50,12 @@ echo -e "***** [$0] start " `date +'%Y/%m/%d %H:%M:%S'` " *****\n"
 
 echo "STEP 1. alignment: All vs all pairwise alignment of long-read by LAST aligner"
 
-makedb_cmd="lastdb -P $t -R $alignment_R -u $alignment_u $i $i"
+makedb_cmd="lastdb8 -P $t -R $alignment_R -u $alignment_u $i $i"
 
 echo $makedb_cmd
 eval $makedb_cmd
 
-alignment_cmd="lastal -a $alignment_a -A $alignment_A -b $alignment_b -B $alignment_B -S $alignment_S -P $t -f $alignment_f $i $i > $i.blasttab"
+alignment_cmd="lastal8 -a $alignment_a -A $alignment_A -b $alignment_b -B $alignment_B -S $alignment_S -P $t -f $alignment_f $i $i > $i.blasttab"
 echo $alignment_cmd
 eval $alignment_cmd
 id=`grep -v "#" $i.blasttab  | shuf -n 1000 | awk '{m+=$3} END{print m/NR}'`
