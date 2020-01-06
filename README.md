@@ -32,7 +32,7 @@ Detect the partially aligned reads (PARs) and candidate chimeric positions from 
 - The options for using this step is below. You can change these options in the config.yml.
     - `al` : Minimum alignment length (default: 100bp).  
     - `tl` : Minimum terminal length of unaligned region of PARs (default: 50bp). For obtaining the PARs, the alignment with start/end position within this threshold from the query or subject read terminus are removed.  
-    - `pd` : Mimimum depth of PARs (default: 5).  
+    - `pd` : Minimum depth of PARs (default: 5).  
     - `id` : Alignment identity threshold of PARs (default: 75%).  
 
 ## STEP 3. pcratio
@@ -49,7 +49,7 @@ Split the chimeric read at the chimeric positions detected by STEP 3.
 
 - The options for using this step is below. You can change these options in the config.yml.
     - `pc` : Minimum PC ratio (default: 10%). SACRA detects the chimeric positions with PC ratio greater than this threshold.  
-    - `dp` : Mimimum depth of PARs + CARs (default: 10).  
+    - `dp` : Minimum depth of PARs + CARs (default: 10).  
     - `sl` : Sliding windows threshold (default: 100bp). For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs depth in this threshold windows.  
 
 # Installation
@@ -82,7 +82,7 @@ alignment:
 parsdepth:
   al: 100         : Minimum alignment length.
   tl: 50          : Minimum terminal length of unaligned region of PARs.
-  pd: 5           : Mimimum depth of PARs.
+  pd: 5           : Minimum depth of PARs.
   id: 75          : Alignment identity threshold of PARs.
 
 pcratio:
@@ -91,7 +91,7 @@ pcratio:
 
 split:
   pc: 10          : Minimum PC ratio.
-  dp: 10          : Mimimum depth of PARs + CARs.
+  dp: 10          : Minimum depth of PARs + CARs.
   sl: 100         : Sliding windows threshold.
 ```
 
@@ -106,3 +106,4 @@ split:
 TBA  
 
 # Docker Image
+TBA
