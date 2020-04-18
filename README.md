@@ -42,7 +42,7 @@ Calculate the depth of continuously aligned reads (CARs) and the PARs/CARs ratio
     - `ad` : Minimum length of alignment start/end position from candidate chimeric position (default: 50bp). CARs are detected if it have the alignment with start and end position distant by this threshold or more from the candidate chimeric position.  
     - `id` : Alignment identity threshold of CARs (default: 75%).  
 
-    ![PARs_CARs](https://github.com/hattori-lab/SACRA/blob/master/documentation/images/SACRA.Fig1.png)
+    ![PARs_CARs](https://github.com/hattori-lab/SACRA/blob/master/documentation/images/SACRA.Fig.png)
 
 ## STEP 4. Split
 Split the chimeric read at the chimeric positions detected by STEP 3.
