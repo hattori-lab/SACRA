@@ -16,7 +16,7 @@ http://www.htslib.org/
 # Workflow of SACRA
 SACRA operates in four phases: 1. alignment, 2. parsdepth, 3. pcratio and 4. split.  
 
-## STEP 1. alignment
+## STEP 1. Alignment
 SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
 For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, HiFi reads of PacBio, etc.). In the original paper, error-corrected long reads had relatively high accuracy with 97% on average. This process takes a time, so we recommend using multithreads.
 
@@ -26,7 +26,7 @@ For obtaining better performance of SACRA, input long-read needs to be highly ac
     - `b` : Gap extension cost of LAST aligner (default: 12).
     - `B` : Insertion extension cost of LAST aligner (default: 5).  
 
-## STEP 2. parsdepth
+## STEP 2. PARs depth
 Detect the partially aligned reads (PARs) and candidate chimeric positions from the alignment result of STEP 1, and obtain the depth of PARs at that positions.
 
 - The options for using this step is below. You can change these options in the config.yml.
@@ -35,7 +35,7 @@ Detect the partially aligned reads (PARs) and candidate chimeric positions from 
     - `pd` : Minimum depth of PARs (default: 5).  
     - `id` : Alignment identity threshold of PARs (default: 75%).  
 
-## STEP 3. pcratio
+## STEP 3. PC ratio
 Calculate the depth of continuously aligned reads (CARs) and the PARs/CARs ratio (PC ratio) at the candidate chimeric positions.
 
 - The options for using this step is below. You can change these options in the config.yml.
@@ -44,7 +44,7 @@ Calculate the depth of continuously aligned reads (CARs) and the PARs/CARs ratio
       
     ![PARs_CARs](https://github.com/hattori-lab/SACRA/blob/master/documentation/images/PARs_CARs.png)
 
-## STEP 4. split
+## STEP 4. Split
 Split the chimeric read at the chimeric positions detected by STEP 3.
 
 - The options for using this step is below. You can change these options in the config.yml.
