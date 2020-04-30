@@ -88,7 +88,7 @@ echo -e "STEP 4. split: Split chimeras at the chimeric positions"
 split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
 echo $split_cmd
 eval $split_cmd
-SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
+perl SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
 
 for n in `ls $i.blasttab.depth.pcratio.faidx.split*`
 do
