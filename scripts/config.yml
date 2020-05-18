@@ -4,7 +4,7 @@ alignment:
   R: "01"
   u: "NEAR"
   a: 0 
-  A: 5 
+  A: 10 
   b: 15 
   B: 7 
   S: 1  
@@ -21,7 +21,7 @@ pcratio:
   id: 75
 
 split:
-  pc: 10 
+  pc: 8 
   dp: 0 
   sl: 100
 
