@@ -90,7 +90,7 @@ pcratio:
   id: 75          : Alignment identity threshold of CARs.
 
 split:
-  pc: 10          : Minimum PC ratio.
+  pc: 8           : Minimum PC ratio.
   dp: 0           : Minimum depth of PARs + CARs.
   sl: 100         : Sliding windows threshold.
 ```
