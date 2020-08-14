@@ -61,7 +61,7 @@ export PATH=$PATH:/path_on_your_system/SACRA/scripts/
 # Usage
 Run the below command in the directory containing the config.yml.  
 ```
-cp /path_on_your_system/SACRA/scripts/config.yml .
+cp /path_on_your_system/SACRA/scripts/config.yml path_to_run
 SACRA.sh [-i <input fasta file>] [-p <prefix>] [-t <max no. of cpu cores>]
 ```
 
