@@ -104,8 +104,7 @@ split:
 `output.fasta`: Final sequences combining non-chimeric and split reads.  
 
 # Publication
-Preprint is available here.
-
+Preprint is available here.  
 https://www.researchsquare.com/article/rs-58640/v1
 
 # Docker Image
