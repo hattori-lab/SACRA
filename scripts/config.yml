@@ -20,8 +20,22 @@ pcratio:
   ad: 50 
   id: 75
 
+mpc:
+  sp: "true"
+  rf: "lambda.fasta"
+  R: "01"
+  u: "NEAR"
+  a: 8
+  A: 16 
+  b: 12 
+  B: 5
+  S: 1  
+  f: "BlastTab+"
+  id: 95
+  al: 50
+  lt: 50
+
 split:
-  pc: 8 
+  pc: 4
   dp: 0 
   sl: 100
-
