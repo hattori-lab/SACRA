@@ -3,17 +3,17 @@
 alignment:
   R: "01"
   u: "NEAR"
-  a: 8 
-  A: 16 
-  b: 12 
-  B: 5 
+  a: 0 
+  A: 10 
+  b: 15 
+  B: 7 
   S: 1  
   f: "BlastTab+"
 
 parsdepth:
   al: 100 
   tl: 50 
-  pd: 5 
+  pd: 3 
   id: 75
 
 pcratio:
@@ -21,7 +21,7 @@ pcratio:
   id: 75
 
 split:
-  pc: 10 
-  dp: 10 
+  pc: 8 
+  dp: 0 
   sl: 100
 

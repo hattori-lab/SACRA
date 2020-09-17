@@ -63,18 +63,18 @@ echo "Average read-vs-read identity (%): $id"
 echo -e "DONE\n"
 
 echo -e "STEP 2. parsdepth: Detecting the partially aligned reads (PARs)"
-parsdepth_cmd="SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
+parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
 echo $parsdepth_cmd
 eval $parsdepth_cmd 
 echo -e "DONE\n"
 
 echo -e "STEP 3. pcratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
-pcratio_cmd="SACRA_multi.pl $t $i.blasttab.depth"
+pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
 echo $pcratio_cmd
 eval $pcratio_cmd
 for k in `ls $i.blasttab.depth.split*`
 do
-    SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio & 
+    perl SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio & 
 done
 
 # wait for all backgroud jobs to finish
@@ -85,10 +85,10 @@ rm -rf $i*.depth.split*
 echo -e "DONE\n"
 
 echo -e "STEP 4. split: Split chimeras at the chimeric positions"
-split_cmd="SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
+split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
 echo $split_cmd
 eval $split_cmd
-SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
+perl SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
 
 for n in `ls $i.blasttab.depth.pcratio.faidx.split*`
 do
