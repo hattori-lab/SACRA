@@ -21,7 +21,7 @@ function parse_yaml {
    }'
 }
 
-while getopts ":i:p:t:" o; do
+while getopts ":i:p:t:c:" o; do
     case "${o}" in
         i)
             i=${OPTARG}
@@ -32,6 +32,9 @@ while getopts ":i:p:t:" o; do
         t)
             t=${OPTARG}
             ;;
+        c)
+            c=${OPTARG}
+            ;;
         *)
             usage
             ;;
@@ -40,101 +43,101 @@ done
 shift $((OPTIND-1))
 
 
-if [ -z "${i}" ] || [ -z "${p}" ] || [ -z "${t}" ]; then
-    echo "Usage: $0 [-i <input fasta file>] [-p <prefix>] [-t <max no. of cpu cores>]" 1>&2;
+if [ -z "${i}" ] || [ -z "${p}" ] || [ -z "${t}" ] || [ -z "${c}" ]; then
+    echo "Usage: $0 [-i <input fasta file>] [-p <prefix>] [-t <max no. of cpu cores>] [-c <config.yml>]" 1>&2;
     exit 1;
 fi
 
-eval $(parse_yaml config.yml)
+eval $(parse_yaml $c)
 
-echo -e "***** [$0, Version: $Version] start " `date +'%Y/%m/%d %H:%M:%S'` " *****\n"
+echo -e "***** [$0, Version: $Version] start " `date +'%Y/%m/%d %H:%M:%S'` " *****"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] $0 -i $i -p $p -t $t -c $c\n"
 
 ########## STEP1 ##########
-echo "STEP 1. alignment: All vs all pairwise alignment of long-read by LAST aligner"
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 1. alignment: All vs all pairwise alignment of long-read by LAST aligner"
 makedb_cmd="lastdb8 -P $t -R $alignment_R -u $alignment_u $i $i"
 
-echo $makedb_cmd
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] $makedb_cmd"
 eval $makedb_cmd
 
 alignment_cmd="lastal8 -a $alignment_a -A $alignment_A -b $alignment_b -B $alignment_B -S $alignment_S -P $t -f $alignment_f $i $i > $i.blasttab"
-echo $alignment_cmd
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] $alignment_cmd"
 eval $alignment_cmd
 id=`grep -v "#" $i.blasttab  | shuf -n 1000 | awk '{m+=$3} END{print m/NR}'`
-echo "Average read-vs-read identity (%): $id"
-echo -e "DONE\n"
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] Average read-vs-read identity (%): $id"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
 ########## STEP2 ##########
-echo -e "STEP 2. parsdepth: Detecting the partially aligned reads (PARs)"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 2. parsdepth: Detecting the partially aligned reads (PARs)"
 parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
-echo $parsdepth_cmd
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] $parsdepth_cmd"
 eval $parsdepth_cmd 
-echo -e "DONE\n"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
 ########## STEP3 ##########
-echo -e "STEP 3. pcratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 3. pcratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
 pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
-echo $pcratio_cmd
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] $pcratio_cmd"
 eval $pcratio_cmd
 for k in `ls $i.blasttab.depth.split*`
 do
-    echo "SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio"
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio"
     perl SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio & 
 done
 # wait for all backgroud jobs to finish
 wait
 
 cat="cat $i*.depth.split*.pcratio > $i.blasttab.depth.pcratio"
-echo $cat
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] $cat"
 eval $cat
 rm -rf $i*.depth.split*
-echo -e "DONE\n"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
 ########## STEP4 ##########
-echo -e "STEP 4. cal mPC: Calculate mPC ratio based on spike-in reference genome"
-if [ $mpc_sp = true ]; then
-    echo "mPC ratio was calculated based on provided spike-in reference genome."
-    echo "Spike-in reference genome: $mpc_rf"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 4. cal mPC: Calculate mPC ratio based on spike-in reference genome"
+if [ $mpc_sp = true ] && [ -e $mpc_rf ]; then
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] mPC ratio was calculated based on provided spike-in reference genome."
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] Spike-in reference genome: $mpc_rf"
 
     rfdb_cmd="lastdb8 -P $t -R $mpc_R -u $mpc_u $mpc_rf $mpc_rf"
-    echo $rfdb_cmd
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] $rfdb_cmd"
     eval $rfdb_cmd
 
     rfalign_cmd="lastal8 -a $mpc_a -A $mpc_A -b $mpc_b -B $mpc_B -S $mpc_S -P $t -f $mpc_f $mpc_rf $i > $i.spike-in.blasttab"
-    echo $rfalign_cmd
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] $rfalign_cmd"
     eval $rfalign_cmd
     grep -v "#" $i.spike-in.blasttab | awk -v "id=$mpc_id" '$3>=id' | awk -v "al=$mpc_al" '$4>=al' > $i.spike-in.blasttab.aligned
     awk '{print $1}' $i.spike-in.blasttab.aligned | sort | uniq > $i.spike-in.blasttab.aligned.id
 
     chimera_cmd="perl SACRA_detect_chimera.pl -i $i.spike-in.blasttab -id $mpc_id -al $mpc_al -lt $mpc_lt > $i.spike-in.blasttab.chimera"
-    echo $chimera_cmd
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] $chimera_cmd"
     eval $chimera_cmd
 
     chimera_pos_cmd="perl SACRA_detect_chimeric_position.pl $i.spike-in.blasttab.chimera > $i.spike-in.blasttab.chimera.position"
-    echo $chimera_pos_cmd
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] $chimera_pos_cmd"
     eval $chimera_pos_cmd
 
     cal_mpc="perl SACRA_reference_PC.pl $i.spike-in.blasttab.aligned.id $i.blasttab.depth.pcratio $i.spike-in.blasttab.chimera.position"
-    echo $cal_mpc
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] $cal_mpc"
     eval $cal_mpc
 
     split_pc=`sort -k4,4nr $i.blasttab.depth.pcratio.mPC | awk '{print $1}' | sed 's/mPC=//g' | head -n 1`
-    echo "Calculated mPC ratio: $split_pc"
-    echo -e "DONE\n"
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] Calculated mPC ratio: $split_pc"
+    echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 else
-    echo "Spike-in reference genome is not provided."
-    echo "mPC ratio in the config file was used."
-    echo "Calculated mPC ratio: $split_pc"
-    echo -e "DONE\n"
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] Spike-in reference genome is not provided, so the mPC ratio in the config file was used."
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] Calculated mPC ratio: $split_pc"
+    echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 fi
 ###########################
 
 ########## STEP5 ##########
-echo -e "STEP 5. split: Split chimeras at the chimeric positions"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 5. split: Split chimeras at the chimeric positions"
 split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
-echo $split_cmd
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] $split_cmd"
 eval $split_cmd
 perl SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
 
@@ -150,28 +153,28 @@ samtools faidx $i
 chmod +x $i.blasttab.depth.pcratio.faidx.split*sh
 for m in `ls $i.blasttab.depth.pcratio.faidx.split*sh`
 do
-    echo $m
+    echo "[`date +'%Y/%m/%d %H:%M:%S'`] $m"
     bash $m &
 done
 # wait for all backgroud jobs to finish
 wait
 
 cat="cat $i.blasttab.depth.pcratio.faidx.split*fasta > $i.split.fasta"
-echo $cat
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] $cat"
 eval $cat
 rm -rf $i.blasttab.depth.pcratio.faidx.split*
-echo -e "DONE\n"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
 ########## Output ##########
-echo -e "Output final reads"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] Output final reads"
 awk -F ":" '{print $1}' $i.blasttab.depth.pcratio.faidx | uniq > $i.blasttab.depth.pcratio.faidx.id
 seqkit grep -v -f $i.blasttab.depth.pcratio.faidx.id $i > $i.non_chimera.fasta
 cat $i.non_chimera.fasta $i.split.fasta > $p
 
-echo "Split reads: $i.split.fasta"
-echo "Non-chimeras: $i.non_chimera.fasta"
-echo -e "Combined reads: $p\n"
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] Split reads: $i.split.fasta"
+echo "[`date +'%Y/%m/%d %H:%M:%S'`] Non-chimeras: $i.non_chimera.fasta"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] Combined reads: $p\n"
 ###########################
 
-echo "***** [$0, Version: $Version] end " `date +'%Y/%m/%d %H:%M:%S'` " *****"
+echo "***** [$0, Version: $Version] finished " `date +'%Y/%m/%d %H:%M:%S'` " *****"
