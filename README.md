@@ -56,7 +56,7 @@ Calculate the mPC ratio based on the provided spike-in reference genome.
     - `B`   : Insertion extension cost of LAST aligner (default: 5).
     - `id`  : Alignment identity threshold (default: 95).
     - `al`  : Minimum alignment length (default: 50).
-    - `il`  : Threshold of the unaligned length for detecting chimeric reads (default: 50).
+    - `lt`  : Threshold of the unaligned length for detecting chimeric reads (default: 50).
 
 ## STEP 5. Split
 Split the chimeric read at the chimeric positions detected by STEP 3.
