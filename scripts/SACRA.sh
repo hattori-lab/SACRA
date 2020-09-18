@@ -69,7 +69,7 @@ echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
 ########## STEP2 ##########
-echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 2. parsdepth: Detecting the partially aligned reads (PARs)"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 2. pars depth: Detecting the partially aligned reads (PARs)"
 parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $parsdepth_cmd"
 eval $parsdepth_cmd 
@@ -77,7 +77,7 @@ echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
 ########## STEP3 ##########
-echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 3. pcratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 3. cal pc ratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
 pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $pcratio_cmd"
 eval $pcratio_cmd
@@ -97,7 +97,7 @@ echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
 ########## STEP4 ##########
-echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 4. cal mPC: Calculate mPC ratio based on spike-in reference genome"
+echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 4. cal mPC ratio: Calculate mPC ratio based on spike-in reference genome"
 if [ $mpc_sp = true ] && [ -e $mpc_rf ]; then
     echo "[`date +'%Y/%m/%d %H:%M:%S'`] mPC ratio was calculated based on provided spike-in reference genome."
     echo "[`date +'%Y/%m/%d %H:%M:%S'`] Spike-in reference genome: $mpc_rf"
