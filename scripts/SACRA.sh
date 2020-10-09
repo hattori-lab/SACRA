@@ -64,6 +64,7 @@ alignment_cmd="lastal8 -a $alignment_a -A $alignment_A -b $alignment_b -B $align
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $alignment_cmd"
 eval $alignment_cmd
 id=`grep -v "#" $i.blasttab  | shuf -n 1000 | awk '{m+=$3} END{print m/NR}'`
+<<<<<<< HEAD
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] Average read-vs-read identity (%): $id"
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
@@ -72,10 +73,19 @@ echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 2. pars depth: Detecting the partially aligned reads (PARs)"
 parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $parsdepth_cmd"
+=======
+echo "Average read-vs-read identity (%): $id"
+echo -e "DONE\n"
+
+echo -e "STEP 2. parsdepth: Detecting the partially aligned reads (PARs)"
+parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
+echo $parsdepth_cmd
+>>>>>>> 26f47995b591b2997df0e89062f513af967db7a4
 eval $parsdepth_cmd 
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
+<<<<<<< HEAD
 ########## STEP3 ##########
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 3. cal pc ratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
 pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
@@ -84,6 +94,14 @@ eval $pcratio_cmd
 for k in `ls $i.blasttab.depth.split*`
 do
     echo "[`date +'%Y/%m/%d %H:%M:%S'`] SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio"
+=======
+echo -e "STEP 3. pcratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
+pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
+echo $pcratio_cmd
+eval $pcratio_cmd
+for k in `ls $i.blasttab.depth.split*`
+do
+>>>>>>> 26f47995b591b2997df0e89062f513af967db7a4
     perl SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio & 
 done
 # wait for all backgroud jobs to finish
@@ -134,10 +152,16 @@ else
 fi
 ###########################
 
+<<<<<<< HEAD
 ########## STEP5 ##########
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 5. split: Split chimeras at the chimeric positions"
 split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $split_cmd"
+=======
+echo -e "STEP 4. split: Split chimeras at the chimeric positions"
+split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
+echo $split_cmd
+>>>>>>> 26f47995b591b2997df0e89062f513af967db7a4
 eval $split_cmd
 perl SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
 
