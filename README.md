@@ -35,11 +35,7 @@ Detect the partially aligned reads (PARs) and candidate chimeric positions from 
     - `pd` : Minimum depth of PARs (default: 3).  
     - `id` : Alignment identity threshold of PARs (default: 75%).  
 
-<<<<<<< HEAD
 ## STEP 3. Caluculate PC ratio
-=======
-## STEP 3. PC ratio
->>>>>>> 26f47995b591b2997df0e89062f513af967db7a4
 Calculate the depth of continuously aligned reads (CARs) and the PARs/CARs ratio (PC ratio) at the candidate chimeric positions.
 
 - The options for using this step is below. You can change these options in the config.yml.
@@ -48,7 +44,6 @@ Calculate the depth of continuously aligned reads (CARs) and the PARs/CARs ratio
 
     ![PARs_CARs](https://github.com/hattori-lab/SACRA/blob/master/documentation/images/SACRA.Fig.png)
 
-<<<<<<< HEAD
 ## STEP 4. Calculate mPC ratio
 Calculate the mPC ratio based on the provided spike-in reference genome.
 
@@ -64,9 +59,6 @@ Calculate the mPC ratio based on the provided spike-in reference genome.
     - `lt`  : Threshold of the unaligned length for detecting chimeric reads (default: 50).
 
 ## STEP 5. Split
-=======
-## STEP 4. Split
->>>>>>> 26f47995b591b2997df0e89062f513af967db7a4
 Split the chimeric read at the chimeric positions detected by STEP 3.
 
 - The options for using this step is below. You can change these options in the config.yml.
@@ -83,12 +75,7 @@ export PATH=$PATH:/path_on_your_system/SACRA/scripts/
 # Usage
 Run the below command in the directory containing the config.yml.  
 ```
-<<<<<<< HEAD
 sh SACRA.sh [-i <input fasta file>] [-p <prefix>] [-t <max no. of cpu cores>] [-c <config.yml>]
-=======
-cp /path_on_your_system/SACRA/scripts/config.yml path_to_run
-SACRA.sh [-i <input fasta file>] [-p <prefix>] [-t <max no. of cpu cores>]
->>>>>>> 26f47995b591b2997df0e89062f513af967db7a4
 ```
 
 # Config file
@@ -98,7 +85,6 @@ All parameters of four steps are able to change by editting the config.yml.
 
 
 alignment:
-<<<<<<< HEAD
   R: "01"           : Specify lowercase-marking of lastdb.
   u: "NEAR"         : Specify a seeding scheme of lastdb.
   a: 0              : Gap existence cost.
@@ -113,22 +99,6 @@ parsdepth:
   tl: 50            : Minimum terminal length of unaligned region of PARs.
   pd: 3             : Minimum depth of PARs.
   id: 75            : Alignment identity threshold of PARs.
-=======
-  R: "01"         : Specify lowercase-marking of lastdb.
-  u: "NEAR"       : Specify a seeding scheme of lastdb.
-  a: 0            : Gap existence cost.
-  A: 10           : Insertion existence cost.
-  b: 15           : Gap extension cost.
-  B: 7            : Insertion extension cost.
-  S: 1            : Specify how to use the substitution score matrix for reverse strands.
-  f: "BlastTab+"  : Output format of LAST. SACRA accepts only BlastTab+ format.
-
-parsdepth:
-  al: 100         : Minimum alignment length.
-  tl: 50          : Minimum terminal length of unaligned region of PARs.
-  pd: 3           : Minimum depth of PARs.
-  id: 75          : Alignment identity threshold of PARs.
->>>>>>> 26f47995b591b2997df0e89062f513af967db7a4
 
 pcratio:
   ad: 50            : Minimum length of alignment start/end position from candidate chimeric position.
@@ -150,15 +120,9 @@ mpc:
   lt: 50            : Threshold of the unaligned length for detecting chimeric reads. 
 
 split:
-<<<<<<< HEAD
   pc: 8             : Minimum PC ratio.
   dp: 0             : Minimum depth of PARs + CARs.
   sl: 100           : Sliding windows threshold.
-=======
-  pc: 8           : Minimum PC ratio.
-  dp: 0           : Minimum depth of PARs + CARs.
-  sl: 100         : Sliding windows threshold.
->>>>>>> 26f47995b591b2997df0e89062f513af967db7a4
 ```
 
 
