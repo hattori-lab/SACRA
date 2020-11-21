@@ -70,7 +70,7 @@ echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 
 ########## STEP2 ##########
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 2. pars depth: Detecting the partially aligned reads (PARs)"
-parsdepth_cmd="perl SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
+parsdepth_cmd="SACRA_PARs_depth.pl -i $i.blasttab -al $parsdepth_al -tl $parsdepth_tl -pd $parsdepth_pd -id $parsdepth_id > $i.blasttab.depth"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $parsdepth_cmd"
 eval $parsdepth_cmd 
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
@@ -78,13 +78,13 @@ echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 
 ########## STEP3 ##########
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 3. cal pc ratio: Obtaining the PARs/CARs ratio (PC ratio) at the putative chimeric positions"
-pcratio_cmd="perl SACRA_multi.pl $t $i.blasttab.depth"
+pcratio_cmd="SACRA_multi.pl $t $i.blasttab.depth"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $pcratio_cmd"
 eval $pcratio_cmd
 for k in `ls $i.blasttab.depth.split*`
 do
     echo "[`date +'%Y/%m/%d %H:%M:%S'`] SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio"
-    perl SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio & 
+    SACRA_PCratio.pl -i $i.blasttab -pa $k -ad $pcratio_ad -id $pcratio_id > $k.pcratio & 
 done
 # wait for all backgroud jobs to finish
 wait
@@ -112,15 +112,15 @@ if [ $mpc_sp = true ] && [ -e $mpc_rf ]; then
     grep -v "#" $i.spike-in.blasttab | awk -v "id=$mpc_id" '$3>=id' | awk -v "al=$mpc_al" '$4>=al' > $i.spike-in.blasttab.aligned
     awk '{print $1}' $i.spike-in.blasttab.aligned | sort | uniq > $i.spike-in.blasttab.aligned.id
 
-    chimera_cmd="perl SACRA_detect_chimera.pl -i $i.spike-in.blasttab -id $mpc_id -al $mpc_al -lt $mpc_lt > $i.spike-in.blasttab.chimera"
+    chimera_cmd="SACRA_detect_chimera.pl -i $i.spike-in.blasttab -id $mpc_id -al $mpc_al -lt $mpc_lt > $i.spike-in.blasttab.chimera"
     echo "[`date +'%Y/%m/%d %H:%M:%S'`] $chimera_cmd"
     eval $chimera_cmd
 
-    chimera_pos_cmd="perl SACRA_detect_chimeric_position.pl $i.spike-in.blasttab.chimera > $i.spike-in.blasttab.chimera.position"
+    chimera_pos_cmd="SACRA_detect_chimeric_position.pl $i.spike-in.blasttab.chimera > $i.spike-in.blasttab.chimera.position"
     echo "[`date +'%Y/%m/%d %H:%M:%S'`] $chimera_pos_cmd"
     eval $chimera_pos_cmd
 
-    cal_mpc="perl SACRA_reference_PC.pl $i.spike-in.blasttab.aligned.id $i.blasttab.depth.pcratio $i.spike-in.blasttab.chimera.position"
+    cal_mpc="SACRA_reference_PC.pl $i.spike-in.blasttab.aligned.id $i.blasttab.depth.pcratio $i.spike-in.blasttab.chimera.position"
     echo "[`date +'%Y/%m/%d %H:%M:%S'`] $cal_mpc"
     eval $cal_mpc
 
@@ -136,10 +136,10 @@ fi
 
 ########## STEP5 ##########
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 5. split: Split chimeras at the chimeric positions"
-split_cmd="perl SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
+split_cmd="SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $split_cmd"
 eval $split_cmd
-perl SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
+SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
 
 for n in `ls $i.blasttab.depth.pcratio.faidx.split*`
 do
