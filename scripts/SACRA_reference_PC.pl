@@ -66,7 +66,7 @@ my $all_TN = @array_non_chi;    # Number of all true negatives
 my $TP;                         # Number of true positives
 my $TN;                         # Number of true negatives
 my @array_mPC;                  # mPC ratio
-for (my $i = 1; $i<=20; $i++){
+for (my $i = 1; $i<=100; $i++){
     foreach my $out (@array_chi){
         my @array = split(/\t/, $out);
         if($array[5] >= $i){
