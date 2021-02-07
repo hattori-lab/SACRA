@@ -7,10 +7,10 @@ SACRA splits the chimeric reads to the non-chimeric reads in PacBio long reads o
 last (version 963).
 http://last.cbrc.jp/
 
-seqkit (Version: 0.8.0).
+seqkit (version: 0.8.0).
 https://bioinf.shenwei.me/seqkit/usage/
 
-seqtk
+seqtk (version: 1.2-r102-dirty).
 https://github.com/lh3/seqtk
 
 # Workflow of SACRA
