@@ -139,7 +139,7 @@ echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 5. split: Split chimeras at the chim
 split_cmd="SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl | awk '{split($0,a,":"); split(a[2],b,"-"); print a[1],b[1]-1,b[2]}' > $i.blasttab.depth.pcratio.faidx"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $split_cmd"
 eval $split_cmd
-seqrk subseq $i $i.blasttab.depth.pcratio.faidx > $i.split.fasta
+seqtk subseq $i $i.blasttab.depth.pcratio.faidx > $i.split.fasta
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
