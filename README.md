@@ -10,8 +10,8 @@ http://last.cbrc.jp/
 seqkit (Version: 0.8.0).
 https://bioinf.shenwei.me/seqkit/usage/
 
-samtools (Version: 1.4).
-http://www.htslib.org/
+seqtk
+https://github.com/lh3/seqtk
 
 # Workflow of SACRA
 SACRA operates in four phases: 1. alignment, 2. pars depth, 3. cal pc ratio, 4. cal mPC ratio, and 5. split.  
