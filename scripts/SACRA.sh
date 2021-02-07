@@ -136,39 +136,16 @@ fi
 
 ########## STEP5 ##########
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] STEP 5. split: Split chimeras at the chimeric positions"
-split_cmd="SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl > $i.blasttab.depth.pcratio.faidx"
+split_cmd="SACRA_split.pl -i $i.blasttab.depth.pcratio -pc $split_pc -dp $split_dp -sl $split_sl | awk '{split($0,a,":"); split(a[2],b,"-"); print a[1],b[1]-1,b[2]}' > $i.blasttab.depth.pcratio.faidx"
 echo "[`date +'%Y/%m/%d %H:%M:%S'`] $split_cmd"
 eval $split_cmd
-SACRA_multi.pl $t $i.blasttab.depth.pcratio.faidx
-
-for n in `ls $i.blasttab.depth.pcratio.faidx.split*`
-do
-    for j in `less $n`
-    do
-        echo "samtools faidx $i $j >> $n.fasta" >> $n.sh
-    done
-done
-
-samtools faidx $i
-chmod +x $i.blasttab.depth.pcratio.faidx.split*sh
-for m in `ls $i.blasttab.depth.pcratio.faidx.split*sh`
-do
-    echo "[`date +'%Y/%m/%d %H:%M:%S'`] $m"
-    bash $m &
-done
-# wait for all backgroud jobs to finish
-wait
-
-cat="cat $i.blasttab.depth.pcratio.faidx.split*fasta > $i.split.fasta"
-echo "[`date +'%Y/%m/%d %H:%M:%S'`] $cat"
-eval $cat
-rm -rf $i.blasttab.depth.pcratio.faidx.split*
+seqrk subseq $i $i.blasttab.depth.pcratio.faidx > $i.split.fasta
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] DONE\n"
 ###########################
 
 ########## Output ##########
 echo -e "[`date +'%Y/%m/%d %H:%M:%S'`] Output final reads"
-awk -F ":" '{print $1}' $i.blasttab.depth.pcratio.faidx | uniq > $i.blasttab.depth.pcratio.faidx.id
+awk '{print $1}' $i.blasttab.depth.pcratio.faidx | uniq > $i.blasttab.depth.pcratio.faidx.id
 seqkit grep -v -f $i.blasttab.depth.pcratio.faidx.id $i > $i.non_chimera.fasta
 cat $i.non_chimera.fasta $i.split.fasta > $p
 
