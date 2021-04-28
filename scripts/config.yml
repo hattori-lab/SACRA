@@ -36,6 +36,6 @@ mpc:
   lt: 50
 
 split:
-  pc: 8
+  pc: 10
   dp: 0 
   sl: 100
