@@ -62,7 +62,7 @@ Calculate the mPC ratio based on the provided spike-in reference genome.
 Split the chimeric read at the chimeric positions detected by STEP 3.
 
 - The options for using this step is below. You can change these options in the config.yml.
-    - `pc` : Minimum PC ratio (default: 8%). SACRA detects the chimeric positions with PC ratio greater than this threshold.  
+    - `pc` : Minimum PC ratio (default: 10%). SACRA detects the chimeric positions with PC ratio greater than this threshold.  
     - `dp` : Minimum depth of PARs + CARs (default: 0).  
     - `sl` : Sliding windows threshold (default: 100bp). For detecting the most probable chimeric position from a chimeric junction with similar sequence, SACRA detects the chimeric position with highest PARs depth in this threshold windows.  
 
@@ -120,7 +120,7 @@ mpc:
   lt: 50            : Threshold of the unaligned length for detecting chimeric reads. 
 
 split:
-  pc: 8             : Minimum PC ratio.
+  pc: 10            : Minimum PC ratio (%).
   dp: 0             : Minimum depth of PARs + CARs.
   sl: 100           : Sliding windows threshold.
 ```
