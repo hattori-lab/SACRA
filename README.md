@@ -103,7 +103,7 @@ pcratio:
   id: 75            : Alignment identity threshold of CARs.
 
 mpc:
-  sp: "true"        : Whether the mPC ratio is calculated based on the spike-in reference genome or not.
+  sp: "false"       : Whether the mPC ratio is calculated based on the spike-in reference genome or not.
   rf: "lambda.fasta": PATH to the spike-in reference genome.
   R: "01"           : Specify lowercase-marking of lastdb.
   u: "NEAR"         : Specify a seeding scheme of lastdb.
