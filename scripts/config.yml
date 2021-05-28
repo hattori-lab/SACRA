@@ -21,7 +21,7 @@ pcratio:
   id: 75
 
 mpc:
-  sp: "true"
+  sp: "false"
   rf: "lambda.fasta"
   R: "01"
   u: "NEAR"
