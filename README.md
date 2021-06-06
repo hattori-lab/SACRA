@@ -43,7 +43,7 @@ Calculate the depth of continuously aligned reads (CARs) and the PARs/CARs ratio
     - `id` : Alignment identity threshold of CARs (default: 75%).  
 
 ## STEP 4. Calculate mPC ratio
-Calculate the mPC ratio based on the provided spike-in reference genome.
+Calculate the mPC ratio based on the provided spike-in reference genome. Even without a spike-in genome, mPC=10 can be applied to remarkable reduction of chimeric reads.
 
 - The options for using this step is below. You can change these options in the config.yml.
     - `sp`  : If the mPC ratio is calculated from spike-in reference genome, set it to true, otherwise, set it false.
