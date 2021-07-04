@@ -95,7 +95,7 @@ alignment:
 parsdepth:
   al: 100           : Minimum alignment length.
   tl: 50            : Minimum terminal length of unaligned region of PARs.
-  pd: 3             : Minimum depth of PARs.
+  pd: 1             : Minimum depth of PARs.
   id: 75            : Alignment identity threshold of PARs.
 
 pcratio:
