@@ -13,7 +13,7 @@ alignment:
 parsdepth:
   al: 100 
   tl: 50 
-  pd: 3 
+  pd: 1 
   id: 75
 
 pcratio:
