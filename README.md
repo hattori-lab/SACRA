@@ -130,8 +130,9 @@ split:
 `split.fasta`: Splitted reads.  
 `output.fasta`: Final sequences combining non-chimeric and split reads.  
 
-# Publication
-DNA Research, dsab019, https://doi.org/10.1093/dnares/dsab019
+# Citation
+DNA Research, dsab019
+https://doi.org/10.1093/dnares/dsab019
 
 # Docker Image
 TBA
