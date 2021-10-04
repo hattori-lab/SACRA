@@ -14,7 +14,7 @@ seqtk (version: 1.2-r102-dirty).
 https://github.com/lh3/seqtk
 
 # Workflow of SACRA
-SACRA operates in four phases: 1. alignment, 2. pars depth, 3. cal pc ratio, 4. cal mPC ratio, and 5. split.  
+SACRA operates in five phases: 1. alignment, 2. pars depth, 3. cal pc ratio, 4. cal mPC ratio, and 5. split.  
 
 ## STEP 1. Alignment
 SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
