@@ -131,7 +131,7 @@ split:
 `output.fasta`: Final sequences combining non-chimeric and split reads.  
 
 # Citation
-Yuya Kiguchi, Suguru Nishijima, Naveen Kumar, Masahira Hattori, Wataru Suda, Long-read metagenomics of multiple displacement amplified DNA of low-biomass human gut phageomes by SACRA preprocessing chimeric reads, DNA Research, 2021;, dsab019, https://doi.org/10.1093/dnares/dsab019
+Yuya Kiguchi, Suguru Nishijima, Naveen Kumar, Masahira Hattori, Wataru Suda, Long-read metagenomics of multiple displacement amplified DNA of low-biomass human gut phageomes by SACRA pre-processing chimeric reads, DNA Research, Volume 28, Issue 6, December 2021, dsab019, https://doi.org/10.1093/dnares/dsab019
 
 # Docker Image
 TBA
