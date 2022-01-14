@@ -1,6 +1,6 @@
 # SACRA
 Split Amplified Chimeric Read Algorithm  
-SACRA splits the chimeric reads to the non-chimeric reads in PacBio long reads of MDA-treated virome sample.
+SACRA splits the chimeric reads to the non-chimeric reads in long reads of MDA-treated virome sample.
 
 # Dependencies
 
@@ -18,7 +18,7 @@ SACRA operates in five phases: 1. alignment, 2. pars depth, 3. cal pc ratio, 4. 
 
 ## STEP 1. Alignment
 SACRA performs all vs all pairwise alignment of input long-read by LAST aligner for constructing aligned read clusters (ARCs).
-For obtaining better performance of SACRA, input long-read needs to be highly accurate by error-correction by some tools (e.g. MHAP of canu, HiFi reads of PacBio, etc.). In the original paper, error-corrected long reads had relatively high accuracy with 97% on average. This process takes a time, so we recommend using multithreads.
+For obtaining better performance of SACRA, input long-read needs to be relatively high accurate by error-correction by some tools (e.g. MHAP of canu, HiFi reads of PacBio, etc.). In the original paper, error-corrected long reads had relatively high accuracy with 97% on average. This process takes a time, so we recommend using multithreads.
 
 - The options for using this step is below. You can change these options in the config.yml.
     - `a` : Gap existence cost of LAST aligner (default: 0).
