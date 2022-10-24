@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # Developer: Yuya Kiguchi
 # Description: calculate PC ratio of chimeric position
 
